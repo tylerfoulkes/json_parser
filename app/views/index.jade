@@ -1,5 +1,8 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+ p Total amount for all products:
+ h2= total
+ p Individual product prices:
+ for first in name
+  li= first

@@ -4,11 +4,19 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var fs = require('fs');
+var requireDir = require('require-dir');
+
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+// var data = requireDir(__dirname + '/data/');
+var data = require('./data/products_1.json');
+
+app.set('appData', data);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

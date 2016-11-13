@@ -7,15 +7,22 @@ var bodyParser = require('body-parser');
 var fs = require('fs');
 var requireDir = require('require-dir');
 
-
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
 
 // var data = requireDir(__dirname + '/data/');
-var data = require('./data/products_1.json');
 
+// Create array and load in the 5 JSON objects
+var data = []
+data = data.concat(require('./data/products_1.json'));
+data = data.concat(require('./data/products_2.json'));
+data = data.concat(require('./data/products_3.json'));
+data = data.concat(require('./data/products_4.json'));
+data = data.concat(require('./data/products_5.json'));
+
+// Set a global variable that contains the complete JSON object
 app.set('appData', data);
 
 // view engine setup

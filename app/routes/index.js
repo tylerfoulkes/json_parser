@@ -1,26 +1,42 @@
 var express = require('express');
 var router = express.Router();
 
-
-
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
+	/* Load JSON object into local variable */
 	var dataFile = req.app.get('appData');
 	var total_price = 0;
-	var json_data = [];
+	var clock_total = 0;
+	var watch_total = 0;
 
-	for(var i = 0; i < dataFile.products.length; i++) {
-    	for(var j = 0; j < dataFile.products[i].variants.length; j++) {  
-    		json_data = json_data.concat(dataFile.products[i].variants[j].price);
-    		total_price = Number(dataFile.products[i].variants[j].price) + total_price;
-    	}
+	/* 
+		* Parse through JSON object and calculate total prices for all watches,
+	   	* Clock, and all products
+	*/
+	for(var k = 0; k < dataFile.length; k++) {
+		for(var i = 0; i < dataFile[k].products.length; i++) {
+	    	for(var j = 0; j < dataFile[k].products[i].variants.length; j++) {
+	    		if(dataFile[k].products[i].product_type == 'Clock') {
+	    			clock_total = Number(dataFile[k].products[i].variants[j].price) + clock_total;
+	    			total_price = Number(dataFile[k].products[i].variants[j].price) + total_price;
+	    		}
+	    		else if(dataFile[k].products[i].product_type == 'Watch') {
+	    			watch_total = Number(dataFile[k].products[i].variants[j].price) + watch_total;
+	    			total_price = Number(dataFile[k].products[i].variants[j].price) + total_price;
+	    		}
+	    		else {
+	    			total_price = Number(dataFile[k].products[i].variants[j].price) + total_price;
+	    		}
+	    	}
+		}
 	}
 
-
+	/* Send data to view */
 	res.render('index', {
 		title: 'JSON Parser',
-		"name": json_data,
+		clock: clock_total,
+		watch: watch_total,
 		total: total_price
 	});
 

@@ -1,8 +1,14 @@
 extends layout
 
 block content
+ h1= title
+ //- p Individual product prices:
+ //- for first in name
+ //- li= first
+ p Total amount for clocks:
+ h2= '$' + clock
+ p Total amount for Watches:
+ h2= '$' + watch
  p Total amount for all products:
- h2= total
- p Individual product prices:
- for first in name
-  li= first
+ h2= '$' + total
+

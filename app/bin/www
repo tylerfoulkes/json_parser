@@ -20,7 +20,7 @@ app.set('port', port);
  */
 
 //var server = http.createServer(app);
-var server = http.createServer(onRequest).listen(3000, '198.199.112.88');
+var server = http.createServer(app).listen(3000, '198.199.112.88');
 
 /**
  * Listen on provided port, on all network interfaces.

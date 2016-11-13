@@ -32,6 +32,10 @@ router.get('/', function(req, res, next) {
 		}
 	}
 
+	clock_total = Math.round(clock_total * 100) / 100;
+	watch_total = Math.round(watch_total * 100) / 100;
+	total_price = Math.round(total_price * 100) / 100;
+
 	/* Send data to view */
 	res.render('index', {
 		title: 'JSON Parser',

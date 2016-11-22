@@ -1,26 +1,24 @@
-console.log(watch_trend);
+console.log(total_trend);
 
 // Graph scripts here
 var graphData = [{
-			// Watch purchases
-  			data: watch_trend,
-  			color: '#71c73e'
- 		}, 
- 		
- 		{
- 			// Clock purchases
- 			data: clock_trend,
-  			color: '#77b7c5',
-  			points: { radius: 4, fillColor: '#77b7c5' }
-  		
+		// Watch purchases
+		data: total_trend,
+		color: '#5cb85c',
+        points: { radius: 10, fillColor: '#5cb85c' }
+	}, {
+		// Clock purchases
+		data: clock_trend,
+		color: '#5bc0de',
+		points: { radius: 10, fillColor: '#5bc0de' }
  }];
 
-// Lines
+// Line graph settings
 $.plot($('#graph-lines'), graphData, {
 	series: {
         points: {
             show: true,
-            radius: 5
+            radius: 10
         },
         lines: {
             show: true
@@ -28,21 +26,21 @@ $.plot($('#graph-lines'), graphData, {
         shadowSize: 0
     },
     grid: {
-        color: '#646464',
+        color: 'transparent',
         borderColor: 'transparent',
         borderWidth: 20,
         hoverable: true
     },
     xaxis: {
         tickColor: 'transparent',
-        tickDecimals: 2
+        tickDecimals: 0
     },
     yaxis: {
-        tickSize: 5
+        tickSize: 100
     }
 });
 
-// Bars
+// Bar graph settings
 $.plot($('#graph-bars'), graphData, {
     series: {
         bars: {
@@ -53,17 +51,16 @@ $.plot($('#graph-bars'), graphData, {
         shadowSize: 0
     },
     grid: {
-        color: '#646464',
+        color: 'transparent',
         borderColor: 'transparent',
         borderWidth: 20,
         hoverable: true
     },
     xaxis: {
-        tickColor: 'transparent',
-        tickDecimals: 2
+        tickColor: 'transparent'
     },
     yaxis: {
-        tickSize: 1000
+        tickSize: 100
     }
 });
 

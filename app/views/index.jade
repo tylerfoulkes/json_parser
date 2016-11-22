@@ -2,51 +2,56 @@ extends layout
 block content
  <nav class="navbar navbar-fixed-top navbar-dark bg-primary">
  <button class="navbar-toggler hidden-sm-up pull-right" type="button" data-toggle="collapse" data-target="#collapsingNavbar">☰</button>
- <a class="navbar-brand" href="#">Shopicruit</a>
+ <a class="navbar-brand" href="#">Shopicruit - Welcome back Admin</a>
  <div class="collapse navbar-toggleable-xs" id="collapsingNavbar">
  <ul class="nav navbar-nav pull-right">
  <li class="nav-item active">
  <a class="nav-link">Home <span class="sr-only">Home</span></a>
  </li>
  <li class="nav-item">
- <a class="nav-link">Features</a>
+ <a class="nav-link">Inventory</a>
  </li>
  <li class="nav-item">
- <a class="nav-link">About</a>
+ <a class="nav-link">Settings</a>
  </li>
  </ul>
  </div>
  </nav>
         
- <!--/col-->
 
- <div class="col-md-12 main">
- <h1 class="display-3 hidden-xs-down">Shopicruit dashboard!</h1>
- <p class="lead">Check out your product sales below</p>
+ <div class="col-md-12 main top20">
+ <div class="row">
+ <div class="col-md-12">
+ </div>
 
  <!-- Graph HTML -->
+ <div class="col-md-12">
  <div id="graph-wrapper">
+ <h6 class="text-uppercase">Inventory value</h6>
  <div class="graph-info">
- <a href="javascript:void(0)" class="visitors">Visitors</a>
- <a href="javascript:void(0)" class="returning">Returning Visitors</a>
- <a href="#" id="bars"><span></span></a>
- <a href="#" id="lines" class="active"><span></span></a>
+ <p class="visitors">Product in inventory</p>
+ <p class="returning">Clock product in inventory</p>
+ <a href="#" id="bars"><i class="fa fa-bar-chart" aria-hidden="true"></i></a>
+ <a href="#" id="lines" class="active"><i class="fa fa-line-chart" aria-hidden="true"></i></a>
  </div>
  <div class="graph-container">
+ <div class='flot-x-axis flot-x1-axis'>
+ <div class='flot-tick-label'>USD</div>
+ </div>
  <div id="graph-lines"></div>
  <div id="graph-bars"></div>
+ </div>
+ <div class='flot-y-axis flot-y1-axis'>
+ <div class='flot-tick-label'>2016 Monthly</div>
+ </div>
+ </div>
  </div>
  </div>
  <!-- end Graph HTML -->
 
- <div class="alert alert-warning fade collapse" role="alert" id="myAlert">
- <button type="button" class="close" data-dismiss="alert" aria-label="Close">
- <span aria-hidden="true">×</span>
- <span class="sr-only">Close</span>
- </button>
- </div>
+ <div class="clearfix"></div>
 
- <div class="row">
+ <div class="row top20">
  <div class="col-lg-4 col-md-6">
  <div class="card card-inverse card-success">
  <div class="card-block bg-success">
@@ -94,4 +99,4 @@ block content
   var watch_trend =!{JSON.stringify(trend_watch)}
   var clock_trend =!{JSON.stringify(trend_clock)}
   var total_trend =!{JSON.stringify(trend_total)}
- script(src="javascripts/scripts.js")
+ script(src="javascripts/flot-setup.js")

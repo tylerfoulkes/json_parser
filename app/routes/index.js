@@ -4,7 +4,7 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-	/* Load JSON object into local variable */
+	/* Load JSON object into local variable to prepare for parsing product totals */
 	var dataFile = req.app.get('appData');
 	var total_price = 0;
 	var clock_total = 0;
@@ -42,6 +42,15 @@ router.get('/', function(req, res, next) {
 
 
 
+
+	/*
+		* Below is a very rough graph implementation. Since the products in the JSON objects 
+		* were all created on the same day and had the same time stamp I decided to make
+		* a fake month by month sales chart by assigning each of the first 12 product price
+		* totals to a month.
+	*/
+
+	// Created local variables for graph implementation
 	var watch_trend = [];
 	var clock_trend = [];
 	var total_trend = [];
@@ -49,46 +58,40 @@ router.get('/', function(req, res, next) {
 	var watch_sum = 0;
 	var sum = 0;
 
-	function push_watch(x, y) {
-  		watch_trend = watch_trend.concat(new Array([x, y]));
-	}
-
+	// Created push functions to push data points to the trend arrays
 	function push_clock(x, y) {
   		clock_trend = clock_trend.concat(new Array([x, y]));
 	}
-
 	function push_total(x, y) {
   		total_trend = total_trend.concat(new Array([x, y]));
 	}
 
+	// Created an array of months
+	var months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-
-	var months = ['January', 'February', 'March', 'April', 
-	'May', 'June', 'July', 'August', 'September', 'Ocotober', 'November', 'December'];
-
+	// Loop through the first twelve products and all of there variants
+	// no watch products were contained in the first 12 products so I ommited
+	// Watch sales
 	for(i = 0; i < months.length; i++) {
 		for(j = 0; j < dataFile[0].products[i].variants.length; j++) {
-			if(dataFile[0].products[i].product_type == 'Clock') {
-				clock_sum++;
-				sum++;
-			}
-			else if(dataFile[0].products[i].product_type == 'Watch') {
-				watch_sum++;
-				sum++;
-			}
-			else {
-				sum++;
-			}
+				if(dataFile[0].products[i].product_type == 'Clock') {
+					clock_sum = clock_sum + Number(dataFile[0].products[i].variants[j].price);
+					sum = sum + Number(dataFile[0].products[i].variants[j].price);
+				}
+				else {
+					sum = sum + Number(dataFile[0].products[i].variants[j].price);
+				}
 		}
 		push_clock(months[i], clock_sum);
 		push_total(months[i], sum);
-		push_watch(months[i], watch_sum);
-		watch_sum, clock_sum, sum = 0;
+		clock_sum = 0;
+		sum = 0;
 	}
 
 
+	
 
-	/* Send data to view */
+	/* Send all data (totals and trend arrays) to view */
 	res.render('index', {
 		title: 'JSON Parser',
 		trend_watch: watch_trend,
@@ -102,5 +105,3 @@ router.get('/', function(req, res, next) {
 });
 
 module.exports = router;
-
-//Final Git automation push

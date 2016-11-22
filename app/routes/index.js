@@ -40,9 +40,60 @@ router.get('/', function(req, res, next) {
 	watch_total = Math.round(watch_total * 100) / 100;
 	total_price = Math.round(total_price * 100) / 100;
 
+
+
+	var watch_trend = [];
+	var clock_trend = [];
+	var total_trend = [];
+	var clock_sum = 0;
+	var watch_sum = 0;
+	var sum = 0;
+
+	function push_watch(x, y) {
+  		watch_trend = watch_trend.concat(new Array([x, y]));
+	}
+
+	function push_clock(x, y) {
+  		clock_trend = clock_trend.concat(new Array([x, y]));
+	}
+
+	function push_total(x, y) {
+  		total_trend = total_trend.concat(new Array([x, y]));
+	}
+
+
+
+	var months = ['January', 'February', 'March', 'April', 
+	'May', 'June', 'July', 'August', 'September', 'Ocotober', 'November', 'December'];
+
+	for(i = 0; i < months.length; i++) {
+		for(j = 0; j < dataFile[0].products[i].variants.length; j++) {
+			if(dataFile[0].products[i].product_type == 'Clock') {
+				clock_sum++;
+				sum++;
+			}
+			else if(dataFile[0].products[i].product_type == 'Watch') {
+				watch_sum++;
+				sum++;
+			}
+			else {
+				sum++;
+			}
+		}
+		push_clock(months[i], clock_sum);
+		push_total(months[i], sum);
+		push_watch(months[i], watch_sum);
+		watch_sum, clock_sum, sum = 0;
+	}
+
+
+
 	/* Send data to view */
 	res.render('index', {
 		title: 'JSON Parser',
+		trend_watch: watch_trend,
+		trend_clock: clock_trend,
+		trend_total: total_trend,
 		clock: clock_total,
 		watch: watch_total,
 		total: total_price
